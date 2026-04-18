@@ -11,7 +11,7 @@ Skills are `SKILL.md` files that teach Claude Code how to handle specific tasks.
 | Skill | Description |
 |-------|-------------|
 | [code-review](skills/code-review/) | Review a PR, diff file, or staged changes; run the project linter; report issues by severity |
-| [grill-me](skills/grill-me/) | Stress-test a plan or design through a structured interview, one decision at a time |
+| [grill-me](skills/grill-me/) | Stress-test a plan or design through a structured interview, one decision at a time. Inspired by [Matt Pocock](https://github.com/mattpocock/skills) |
 | [writing-skills](skills/writing-skills/) | Guide the creation or update of a `SKILL.md` file with the right structure and fields |
 
 ## Installation
