@@ -4,7 +4,7 @@ A Claude Code skill that reviews a pull request, a local diff or patch file, or 
 
 ## What it does
 
-When you ask for a code review, this skill determines what to review (a PR URL, a diff file, or staged changes), runs any detected linter (composer, npm, make), and produces a structured report with issues numbered and grouped by severity: critical, medium, and minor. Security concerns unrelated to the change are reported separately at the end.
+When you ask for a code review, this skill determines what to review (a PR URL, a diff file, or staged changes), runs any detected linter (composer, npm, make), and produces a structured report. The report opens with a verdict (✅ Approved, 🔴 Request changes, or 💬 Comment), followed by issues numbered and grouped by severity: critical, medium, and minor. Security concerns unrelated to the change and project-wide observations are appended in separate sections at the end.
 
 ## Installation
 
