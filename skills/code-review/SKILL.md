@@ -61,6 +61,8 @@ If no linter is detected, note it briefly and proceed.
 
 Review only lines introduced or modified in the diff. Do not flag pre-existing issues in unchanged lines unless they are security concerns.
 
+Before flagging a stylistic or best-practice issue in new code, check whether the same pattern is already established elsewhere in the codebase. If it is, do not raise it as a fix request for this PR — at most surface it as a project-wide observation (see Step 6). Security issues are exempt: flag those regardless of consistency.
+
 Priorities in order:
 1. **Security** — always flag, even if unrelated to the change (handled separately in Step 6)
 2. **Correctness** — does it fulfil the requirements?
@@ -69,6 +71,26 @@ Priorities in order:
 5. **Simplicity** — flag overengineering, not just under-engineering
 
 ### 6. Format and present the review
+
+**Open the review with a verdict line:**
+
+| Verdict | Icon | When |
+|---|---|---|
+| Approved | ✅ | No critical or medium issues (minor issues are fine) |
+| Request changes | 🔴 | One or more critical or medium issues |
+| Comment | 💬 | Cannot determine mergeability — missing requirements context, WIP, etc. |
+
+Format it as a single bold line at the very top, before any other content:
+
+```
+✅ **Approved** — only minor comments below.
+```
+```
+🔴 **Request changes** — N critical / N medium issue(s) must be resolved before merging.
+```
+```
+💬 **Comment** — [brief reason why a verdict cannot be given].
+```
 
 **Severity levels:**
 
@@ -98,3 +120,14 @@ Full explanation if needed. If multiple issues on the same line, use a dash list
 ```
 
 Omit this section entirely if there are no unrelated security concerns.
+
+**Project-wide observations** — if a pattern in the new code is consistent with the existing codebase but still worth raising as a broader concern, append a separate section after the security block:
+
+```
+---
+ℹ Project-wide observations (out of scope for this PR):
+
+- description of the pattern and why it may be worth revisiting across the codebase
+```
+
+Omit this section entirely if there are no such observations.
