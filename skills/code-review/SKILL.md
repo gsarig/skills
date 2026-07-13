@@ -1,133 +1,96 @@
 ---
 name: code-review
-description: "Reviews a pull request, a local diff or patch file, or staged files; detects and runs the project's lint script, then reports issues grouped by severity (critical, medium, minor) with an optional unrelated-security-concerns section."
-when_to_use: "Use when the user asks for a code review in any form: /code-review, 'code review this', 'CR this', or similar. Follow all steps in order; do not shortcut based on this description."
-argument-hint: "[PR URL | path to diff file]"
-model: opus
-effort: high
-allowed-tools: Bash(git *) Bash(gh *) Bash(composer *) Bash(npm *) Bash(make *) Read Grep
+description: "Orchestrator. Triages a PR, local diff, patch file, or staged/branch changes into one of four review types (content, code-lite, code-deep, infra) and dispatches to the matching child skill. Use this when you don't already know which depth or type of review you want. For a known type, invoke the child skill directly."
+when_to_use: "Use when the user asks for a code review in any form: /code-review, 'code review this', 'CR this', or similar, and the type is not pre-specified. Follow all steps in order; do not shortcut based on this description."
+argument-hint: "[PR URL | path to diff file] [--type=<content|code-lite|code-deep|infra>] [--lint]"
+effort: low
+allowed-tools: Bash(git *) Bash(gh *) Bash(bash ~/.claude/skills/code-review/scripts/code-review-state.sh *) Read Grep AskUserQuestion Skill
 ---
 
 ## Steps
 
-### 1. Gather requirements
+### 1. Determine source and fetch the diff
 
-If the user has not provided specific requirements for the change being reviewed, ask:
+Read `~/.claude/skills/code-review/references/review-shared.md` and follow its source detection and diff fetching sections. By the end of this step you have:
 
-> "Do you have specific requirements I should keep in mind? (e.g. a ticket description, acceptance criteria, or expected behaviour)"
+- A resolved source mode: `pr` / `uncommitted` / `branch` / `both` / `file`
+- The diff content
+- The list of changed file paths
 
-Wait for the response before proceeding. If they decline, proceed without requirements.
+### 2. Compute triage signals
 
-### 2. Determine review mode
+From the diff and the changed file list, compute:
 
-**If a PR URL was provided:** proceed to Step 3a.
-
-**If a file path was provided** (`.diff`, `.patch`, `.txt`, or any file containing a diff): proceed to Step 3c.
-
-**If no URL or file was provided:** run `git diff --cached --name-only` and show the list of staged files, then ask:
-
-> "I can see the following staged files: [list]. Is this everything, or do you need to stage more before I proceed?"
-
-Wait for confirmation before continuing.
-
-### 3a. PR mode — fetch the diff
-
-Extract the PR number from the URL. Run `gh pr view <number>` and `gh pr diff <number>`. Proceed to Step 4.
-
-### 3b. Staged files mode — get the diff
-
-Run `git diff --cached` to get the full diff of staged changes. Proceed to Step 4.
-
-### 3c. Diff file mode — read the diff from a local file
-
-Read the file at the provided path. If the file is too large to read in one pass, read it in chunks. Treat the contents as the diff. Proceed to Step 4.
-
-### 4. Detect and run linter
-
-Check only these three files in the project root — no directory traversal:
-
-1. `composer.json` — if it has a `lint` script, run `composer lint`
-2. `package.json` — if it has a `lint` script, run `npm run lint`
-3. `Makefile` — if it has a `lint` target, run `make lint`
-
-If a linter runs and fails, prepend a blocker at the top of the review:
-
-> ⚠ **Linter failed** — must be fixed before merging.
-> [relevant output]
-
-If no linter is detected, note it briefly and proceed.
-
-### 5. Review the changes
-
-Review only lines introduced or modified in the diff. Do not flag pre-existing issues in unchanged lines unless they are security concerns.
-
-Before flagging a stylistic or best-practice issue in new code, check whether the same pattern is already established elsewhere in the codebase. If it is, do not raise it as a fix request for this PR — at most surface it as a project-wide observation (see Step 6). Security issues are exempt: flag those regardless of consistency.
-
-Priorities in order:
-1. **Security** — always flag, even if unrelated to the change (handled separately in Step 6)
-2. **Correctness** — does it fulfil the requirements?
-3. **Best practices**
-4. **Reusability and extensibility**
-5. **Simplicity** — flag overengineering, not just under-engineering
-
-### 6. Format and present the review
-
-**Open the review with a verdict line:**
-
-| Verdict | Icon | When |
-|---|---|---|
-| Approved | ✅ | No critical or medium issues (minor issues are fine) |
-| Request changes | 🔴 | One or more critical or medium issues |
-| Comment | 💬 | Cannot determine mergeability — missing requirements context, WIP, etc. |
-
-Format it as a single bold line at the very top, before any other content:
-
-```
-✅ **Approved** — only minor comments below.
-```
-```
-🔴 **Request changes** — N critical / N medium issue(s) must be resolved before merging.
-```
-```
-💬 **Comment** — [brief reason why a verdict cannot be given].
-```
-
-**Severity levels:**
-
-| Severity | Use when |
+| Signal | How |
 |---|---|
-| **critical** | Security vulnerability, data loss/corruption, production breakage, or a change that will hard-fail the CI pipeline and block all deployments |
-| **medium** | Correctness concern, functional issue, or CI regression that will surface during development or testing but won't block the entire pipeline |
-| **minor** | Hygiene, consistency, cleanup, or style |
+| `lines_added` | count of `^+` lines (excluding `+++` headers), excluding lockfiles and build-output paths |
+| `files_changed` | unique `+++ b/` paths, excluding lockfiles |
+| `all_docs` | every changed path matches `\.(md\|mdx\|txt\|rst)$` or lives under `docs/`, `content/`, `posts/` |
+| `has_infra` | any path under `.github/`, ends in `.tf`, matches `Dockerfile`, or matches `docker-compose*` |
+| `has_security_paths` | any path matches `(auth\|crypto\|password\|token\|secret\|\.env\|sql\|migration)` |
 
-**Numbered comments:**
+Apply recommendation logic (first match wins):
 
-```
-N) `path/to/file.php` L23 — **severity**
-Short explanation.
-Full explanation if needed. If multiple issues on the same line, use a dash list:
-- Issue one
-- Issue two
-```
+1. `has_infra` true: recommend **code-review-infra**
+2. `all_docs` true: recommend **code-review-content**
+3. `has_security_paths` true OR `lines_added >= 500`: recommend **code-review-deep**
+4. Default: recommend **code-review-lite**
 
-**Unrelated security concerns** — append after all numbered comments, separated by `---`:
+Print this classification line before proceeding:
 
-```
----
-⚠ Security concerns unrelated to these changes:
+> Triage: <lines_added> lines / <files_changed> files / <comma-separated signals that fired, or "no special signals">.
+> Recommended: **<skill name>** (<one-sentence reason citing the matching signals>).
 
-- `path/to/file.php` L45 — description
-```
+### 3. Confirm the type
 
-Omit this section entirely if there are no unrelated security concerns.
+**Resolve state location.** Run:
 
-**Project-wide observations** — if a pattern in the new code is consistent with the existing codebase but still worth raising as a broader concern, append a separate section after the security block:
+    bash ~/.claude/skills/code-review/scripts/code-review-state.sh resolve
 
-```
----
-ℹ Project-wide observations (out of scope for this PR):
+If output is non-empty, that's the `state_file` path. If empty, persistence is skipped for this run (no project context, or `.claude/` missing).
 
-- description of the pattern and why it may be worth revisiting across the codebase
-```
+**Compute `source_id`:**
 
-Omit this section entirely if there are no such observations.
+- PR mode: `pr:<URL>`
+- File mode: `file:<absolute path>`
+- Git modes: `git:<mode>:<branch>`, where `<mode>` is one of `branch`, `uncommitted`, `both`, and `<branch>` is the output of `git branch --show-current` (use `detached` if empty)
+
+**Pick the type, in this order:**
+
+1. **`--type=<valid>` was passed.** Use that type. If the value is not one of `content`, `code-lite`, `code-deep`, `infra`, ignore it and continue to step 2. If `state_file` is set, run:
+
+        bash ~/.claude/skills/code-review/scripts/code-review-state.sh set <state_file> <source_id> <type>
+
+    Skip the prompt.
+
+2. **Stored type exists.** If `state_file` is set, run:
+
+        bash ~/.claude/skills/code-review/scripts/code-review-state.sh get <state_file> <source_id>
+
+    If the output is non-empty, use that type and print:
+
+    > Using previously chosen review type: **<type>**. Pass `--type=<other>` to override.
+
+    Skip the prompt.
+
+3. **Prompt the user.** Call `AskUserQuestion`:
+
+    - question: "Which review type should I run?"
+    - header: "Review type"
+    - multiSelect: false
+    - options: the recommended type first with `(Recommended)` appended to the label, then the other three in this fixed order: code-deep, code-lite, infra, content (skipping whichever is recommended).
+
+    After the user picks, if `state_file` is set, run the `set` command from step 1 to persist the choice.
+
+The chosen label maps to a child skill: `content` -> `code-review-content`, `code-lite` -> `code-review-lite`, `code-deep` -> `code-review-deep`, `infra` -> `code-review-infra`.
+
+### 4. Dispatch to the child skill
+
+Invoke the chosen child skill via the `Skill` tool. Build the `args` string from the resolved source so the child does not re-prompt:
+
+- PR mode: `--source=pr --pr=<URL>`
+- File mode: `--source=file --file=<path>`
+- Uncommitted / branch / both: `--source=<mode>`
+- If the user passed `--lint`, append `--lint`
+
+The child performs the actual review and produces all output. Do not produce any review content yourself: your job ends after dispatching.

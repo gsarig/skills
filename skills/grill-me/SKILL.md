@@ -2,8 +2,7 @@
 name: grill-me
 description: "Interviews the user branch-by-branch about a plan or design, resolving dependent decisions one at a time and recommending an answer for each question."
 when_to_use: "Use when the user asks to be grilled on a plan, says 'grill me', or wants to stress-test a design before implementation. Follow all steps in order; do not shortcut based on this description."
-model: opus
-effort: high
+effort: xhigh
 ---
 
 ## Steps
