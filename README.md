@@ -15,6 +15,7 @@ Skills are `SKILL.md` files that teach Claude Code how to handle specific tasks.
 | [devils-advocate](skills/devils-advocate/) | One-shot devil's-advocate critique of a plan or design: steel-manned strengths, severity-tagged findings with alternatives, verdict |
 | [grill-me](skills/grill-me/) | Stress-test a plan or design through a structured interview, one decision at a time. Inspired by [Matt Pocock](https://github.com/mattpocock/skills) |
 | [investigate](skills/investigate/) | Investigate a question to a grounded conclusion where every claim is verified against a primary source or flagged as a hypothesis |
+| [layman](skills/layman/) | Explain a ticket, file, or concept the way you'd explain it to a smart teenager, in a few plain sentences |
 | [obsidian-charts](skills/obsidian-charts/) | Reference for chart code inside Obsidian `dataviewjs` blocks: YAML chart blocks, direct Chart.js rendering, palette, and pitfalls |
 | [tldr](skills/tldr/) | Reduce a reply or text block to its core conclusion in the fewest words |
 | [writing-instructions](skills/writing-instructions/) | Place a behavioral rule in the right instruction file, deduped against the rules already there and written tight |
