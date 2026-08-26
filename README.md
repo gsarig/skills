@@ -10,6 +10,7 @@ Skills are `SKILL.md` files that teach Claude Code how to handle specific tasks.
 
 | Skill | Description |
 |-------|-------------|
+| [archive-plan](skills/archive-plan/) | Retire a finished plan: verify what actually shipped against real artifacts (never the plan's own status line), then file it under `plans/archive/` |
 | [claude-windows](skills/claude-windows/) | Compute the optimal Claude usage-window ping schedule from your work hours and register cloud routines that pin the window boundaries |
 | [code-review](skills/code-review/) | Review a PR, diff file, or local changes: an orchestrator triages the change and dispatches to one of four specialized skills ([lite](skills/code-review-lite/), [deep](skills/code-review-deep/), [infra](skills/code-review-infra/), [content](skills/code-review-content/)) |
 | [devils-advocate](skills/devils-advocate/) | One-shot devil's-advocate critique of a plan or design: steel-manned strengths, severity-tagged findings with alternatives, verdict |
