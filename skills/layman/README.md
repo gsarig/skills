@@ -18,3 +18,7 @@ cp SKILL.md ~/.claude/skills/layman/SKILL.md
 - `/layman` explains the current topic
 - `/layman <target>` explains the named ticket, file, or concept
 - Or just ask for a plain-English, "explain it like I'm a teenager" rundown.
+
+## Attribution
+
+The backstory behind this skill is in [this blog post](https://www.gsarigiannidis.gr/explain-it-to-me-like-im-a-smart-teenager/).
