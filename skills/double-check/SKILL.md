@@ -11,7 +11,7 @@ effort: xhigh
 
 ### 1. Identify the target and the model
 
-Audit the reply the argument names; with no argument, the most recent substantive reply you gave. State in one line which reply you are auditing and which model you are running on. If the pin did not apply (you are not on Opus xhigh), say so before auditing: a self-audit that silently ran on a weaker model reads as authoritative when it is not.
+Audit the reply the argument names; with no argument, the most recent substantive reply you gave. The `model` pin takes effect only once the skill is active, so the turn's first message can still be on the session model. Make one tool call first (any step-2 or step-3 read will do), then state in one line which reply you are auditing and which model you are running on, taken from the environment as it stands after that call. If it is still not Opus xhigh, say so before auditing: a self-audit that silently ran on a weaker model reads as authoritative when it is not.
 
 ### 2. List every factual claim in the reply
 
