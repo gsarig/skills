@@ -19,7 +19,7 @@ Extract each claim of fact (a value, a path, a behaviour, a "this is how it work
 
 ### 3. Re-verify any unverified claim now
 
-For each unverified claim, check it against its primary source: read the file, run the command, fetch the source. Do not re-assert from memory. If a claim cannot be checked in this session, flag it as an unconfirmed hypothesis and name the single thing that would settle it.
+For each unverified claim, check it against its primary source: read the file, run the command, fetch the source. A claim about what happened earlier in this session (what a command, skill or tool did) has the conversation's own record as its primary source: re-read the actual turn, e.g. whether a slash command was a real dispatch or plain text. Do not re-assert from memory. If a claim cannot be checked in this session, flag it as an unconfirmed hypothesis and name the single thing that would settle it.
 
 ### 4. Re-check against two standing rules
 

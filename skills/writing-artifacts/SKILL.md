@@ -25,7 +25,7 @@ The reader was not in this conversation, so every sentence must make sense to th
 
 ### 3. Scan B: remove only padding
 
-At the sentence level, remove **only** restatement of something the artifact already said and syntactic padding ("it is worth noting that", "in order to" → "to"). Everything else is out of scope. A sentence stating a limit, condition, or confidence level is meaning whatever its wording ("on Chrome only", "assuming the cap holds", "probably"), so never trim it; if it still reads as padding, flag it back per step 5 rather than cutting.
+At the sentence level, remove **only** restatement of something the artifact already said and syntactic padding ("it is worth noting that", "in order to" → "to"). Everything else is out of scope. A sentence stating a limit, condition, or confidence level is meaning whatever its wording ("on Chrome only", "assuming the cap holds", "probably"), so never trim it; if it still reads as padding, flag it back per step 5 rather than cutting. Defer to the producing skill's own length ceiling where it sets one.
 
 ### 4. Scan C: AI writing tics
 

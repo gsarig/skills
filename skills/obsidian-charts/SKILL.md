@@ -126,3 +126,4 @@ const BAR_COLORS = [
 - **Plugin id collisions:** if multiple `window.renderChart` calls share the same plugin object but register under the same `id`, Chart.js may warn. Give each plugin instance a unique `id` (`'topLabels'`, `'topLabels2'`, etc.) when rendering multiple charts.
 - **`chartjs-plugin-datalabels` is not bundled** in the obsidian-charts plugin. Do not attempt to use it.
 - **Dataview DataArray is not a plain array.** `dv.pages().map().filter()` returns a Dataview `DataArray`, which does not have `.reduce()`, `.indexOf()`, or other standard Array methods. Call `.array()` to convert before using them: `dv.pages().map(...).filter(...).array()`. `for...of` and `.length` work on DataArrays without conversion.
+- **WSL edits don't re-render.** Editing a note from WSL (the DrvFS `/mnt/c/...` path) doesn't reliably trigger Obsidian's file watcher, so a `dataviewjs` block won't re-run until the note is closed and reopened (or Obsidian restarted).
