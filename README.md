@@ -15,6 +15,7 @@ Skills are `SKILL.md` files that teach Claude Code how to handle specific tasks.
 | [code-review](skills/code-review/) | Review a PR, diff file, or local changes: an orchestrator triages the change and dispatches to one of four specialized skills ([lite](skills/code-review-lite/), [deep](skills/code-review-deep/), [infra](skills/code-review-infra/), [content](skills/code-review-content/)) |
 | [devils-advocate](skills/devils-advocate/) | One-shot devil's-advocate critique of a plan or design: steel-manned strengths, severity-tagged findings with alternatives, verdict |
 | [double-check](skills/double-check/) | Re-check your own last reply for unverified claims, excess length, and overengineering, then re-issue a corrected version |
+| [exit-session](skills/exit-session/) | Before closing a session, save only what the next one would need, flag anything exiting would lose, then confirm it is safe to `/exit` |
 | [grill-me](skills/grill-me/) | Stress-test a plan or design through a structured interview, one decision at a time. Inspired by [Matt Pocock](https://github.com/mattpocock/skills) |
 | [investigate](skills/investigate/) | Investigate a question to a grounded conclusion where every claim is verified against a primary source or flagged as a hypothesis |
 | [layman](skills/layman/) | Explain a ticket, file, or concept the way you'd explain it to a smart teenager, in a few plain sentences. [Read the backstory](https://www.gsarigiannidis.gr/explain-it-to-me-like-im-a-smart-teenager/) |
