@@ -1,6 +1,6 @@
 ---
 name: writing-skills
-description: "Guides creation or update of a `SKILL.md`: chooses the right frontmatter fields (`description` vs `when_to_use`, `argument-hint`, `model`, `effort`, `allowed-tools`, `paths`, `disable-model-invocation`, etc.), runs two pressure tests, and follows the approval flow before writing."
+description: "Guides creation or update of a `SKILL.md`: chooses the right frontmatter fields (`description` vs `when_to_use`, `argument-hint`, `model`, `effort`, `allowed-tools`, `paths`, `disable-model-invocation`, etc.), runs three pressure tests, and follows the approval flow before writing."
 when_to_use: "Use when asked to write, create, or update a skill (SKILL.md file). Follow all steps in order; do not shortcut based on this description."
 effort: xhigh
 ---
@@ -97,7 +97,7 @@ Reference these from SKILL.md by path (e.g. `See references/api-patterns.md for 
 
 ### 5. Pressure-test before finalising
 
-Run two mental tests.
+Run three tests.
 
 > If an agent read only `description` + `when_to_use`, what would it do?
 
@@ -106,6 +106,10 @@ The right answer is "decide whether this skill applies to the current task," not
 > What would a lazy agent do if this skill did not exist?
 
 Write down that failure mode. Check that the skill's steps directly prevent it. If not, add a step or a "What to avoid" section.
+
+> Would every name in the draft still be true for an agent in a different project at the chosen scope?
+
+Do this mechanically, not by eye: list every proper noun, person, ticket or project ID, vendor, CLI, path, branch name and domain term in the whole draft, frontmatter examples included. Anything not true at the chosen scope moves into that project's own notes, with the project's CLAUDE.md pointing the skill to them; replace it in the skill with a generic term or a placeholder such as `<ticket-ID>`. A skill drafted from inside one project's session is where this leaks most.
 
 ### 6. Present for approval
 

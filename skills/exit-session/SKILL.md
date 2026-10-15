@@ -23,6 +23,8 @@ If nothing was needed, reply with exactly `Good to /exit` and nothing else.
 
 Otherwise, list what you saved and where, one line each. Also list anything you couldn't handle by writing a note that the user should know about before leaving, such as uncommitted changes or a background task that exiting would kill. End with `Good to /exit`, or with the question you need answered if step 2 raised one.
 
+If this session spawned teammates (an agent team) that are still running, send each one a shutdown request and wait until every one confirms. Report this as one line of the list.
+
 ## What to avoid
 
 - Writing a session recap. The transcript survives exit, so only save what is useful on its own next time.

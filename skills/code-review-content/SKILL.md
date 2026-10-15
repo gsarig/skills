@@ -11,7 +11,7 @@ allowed-tools: Bash(git *) Bash(gh *) Read Grep
 
 ### 1. Source and diff
 
-Read `~/.claude/skills/code-review/references/review-shared.md` and follow its source detection and diff fetching sections. If `--source` and the corresponding identifier args were passed, use those and skip any prompting.
+If `--source` and the corresponding identifier args were passed, the orchestrator already resolved the source: skip source detection and read only the diff-fetching and output-format sections of `~/.claude/skills/code-review/references/review-shared.md`, then fetch the diff for that mode. Otherwise, read `~/.claude/skills/code-review/references/review-shared.md` and follow its source detection and diff fetching sections.
 
 ### 2. Load voice reference (conditional)
 

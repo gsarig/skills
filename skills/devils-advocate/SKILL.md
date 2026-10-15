@@ -4,7 +4,7 @@ description: "Produces a one-shot devil's-advocate critique of a plan, design, o
 when_to_use: "Use when the user asks to challenge, critique, stress-test, pressure-test, or poke holes in a plan, design, architecture decision, or proposal (e.g. 'play devil's advocate on this', 'what's wrong with this plan?', 'challenge this approach', 'review this design and push back'). Do NOT use for code, PR, or diff review (use the code-review skills). Do NOT use for interactive one-question-at-a-time interrogation (use grill-me). Follow all steps in order; do not shortcut based on this description."
 argument-hint: "[optional pointer to what to critique]"
 model: opus
-effort: xhigh
+effort: high
 ---
 
 ## Steps

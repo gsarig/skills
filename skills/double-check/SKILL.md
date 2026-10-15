@@ -4,14 +4,14 @@ description: "Re-checks the immediately preceding reply for unverified claims, e
 when_to_use: "Use when the user invokes /double-check, or asks you to double-check, re-check, or verify your last reply ('double-check that', 'check your last answer', 'verify that reply'). With no argument, audit the most recent substantive reply. Do NOT use to investigate a new question from scratch (use investigate), to challenge a plan or design (use devils-advocate), or to review code (use the code-review skills). Follow all steps in order; do not shortcut based on this description."
 argument-hint: "[optional pointer to a specific earlier reply]"
 model: opus
-effort: xhigh
+effort: high
 ---
 
 ## Steps
 
 ### 1. Identify the target and the model
 
-Audit the reply the argument names; with no argument, the most recent substantive reply you gave. The `model` pin takes effect only once the skill is active, so the turn's first message can still be on the session model. Make one tool call first (any step-2 or step-3 read will do), then state in one line which reply you are auditing and which model you are running on, taken from the environment as it stands after that call. If it is still not Opus xhigh, say so before auditing: a self-audit that silently ran on a weaker model reads as authoritative when it is not.
+Audit the reply the argument names; with no argument, the most recent substantive reply you gave. The `model` pin takes effect only once the skill is active, so the turn's first message can still be on the session model. Make one tool call first (any step-2 or step-3 read will do), then state in one line which reply you are auditing and which model you are running on, taken from the environment as it stands after that call. If it is still not Opus high, say so before auditing: a self-audit that silently ran on a weaker model reads as authoritative when it is not.
 
 ### 2. List every factual claim in the reply
 

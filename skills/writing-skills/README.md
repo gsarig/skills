@@ -4,7 +4,7 @@ A Claude Code skill that guides the creation or update of a `SKILL.md` file: pic
 
 ## What it does
 
-When you ask Claude to write or update a skill, this skill takes over and runs a structured workflow: clarifying the trigger condition, choosing the right scope and frontmatter fields, drafting the body with the correct structure, running two mental pressure tests to catch common failure modes, presenting the draft for approval, and only then writing the file.
+When you ask Claude to write or update a skill, this skill takes over and runs a structured workflow: clarifying the trigger condition, choosing the right scope and frontmatter fields, drafting the body with the correct structure, running three pressure tests to catch common failure modes and project-specific names leaking into the skill, presenting the draft for approval, and only then writing the file.
 
 ## Installation
 
