@@ -20,7 +20,7 @@ Skills are `SKILL.md` files that teach Claude Code how to handle specific tasks.
 | [investigate](skills/investigate/) | Investigate a question to a grounded conclusion where every claim is verified against a primary source or flagged as a hypothesis |
 | [layman](skills/layman/) | Explain a ticket, file, or concept the way you'd explain it to a smart teenager, in a few plain sentences. [Read the backstory](https://www.gsarigiannidis.gr/explain-it-to-me-like-im-a-smart-teenager/) |
 | [obsidian-charts](skills/obsidian-charts/) | Reference for chart code inside Obsidian `dataviewjs` blocks: YAML chart blocks, direct Chart.js rendering, palette, and pitfalls |
-| [simpler-path](skills/simpler-path/) | Before a plan is drafted, raise up to three one-line hunches about how the approach could be simpler, and let you pick which are worth discussing |
+| [simpler-path](skills/simpler-path/) | Before a plan is drafted, raise up to three one-line hunches about how the approach could be simpler, and let you pick which are worth discussing. [Read the backstory](https://www.gsarigiannidis.gr/nasa-spent-millions-on-a-pen-that-writes-in-zero-gravity-the-russians-used-a-pencil/) |
 | [tldr](skills/tldr/) | Reduce a reply or text block to its core conclusion in the fewest words |
 | [writing-artifacts](skills/writing-artifacts/) | Mechanical hygiene pass over a drafted Markdown artifact before it's finalised: cuts process narration, dangling references, padding, and AI writing tics, never the substance |
 | [writing-instructions](skills/writing-instructions/) | Place a behavioral rule in the right instruction file, deduped against the rules already there and written tight |

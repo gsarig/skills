@@ -23,3 +23,5 @@ cp SKILL.md ~/.claude/skills/simpler-path/SKILL.md
 - From another skill: call `simpler-path` by name right before drafting
 
 It is not a critique of a finished plan (use [devils-advocate](../devils-advocate/)) or a re-check of a reply (use [double-check](../double-check/)).
+
+The backstory behind this skill is in [this blog post](https://www.gsarigiannidis.gr/nasa-spent-millions-on-a-pen-that-writes-in-zero-gravity-the-russians-used-a-pencil/).
